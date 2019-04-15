@@ -115,7 +115,7 @@ function cp_show_post_tags_on_image_caption($image_excerpt, $item_thumb_id, $pos
   if ( $post_id ) {
     $post_type = get_post_type( $post_id );
     if ( $post_type == 'counter_gallery' ) {
-      $image_excerpt = cp_gallery_tags_for_item( $post_id );
+      $image_excerpt = cp_gallery_tags_for_item( $post_id, true );
     }
   }
   return $image_excerpt;
@@ -182,7 +182,6 @@ add_shortcode('counter_point_search_bar', 'cp_search_bar_shortcode');
 function cp_search_template_load($template) {
   if ( is_gallery_search() ) {
     $template = locate_template(array('gallery_search.php'));
-    \PC::debug( ['template' => $template], __FUNCTION__ );
   }
   return $template;
 }
@@ -235,13 +234,16 @@ function cp_gallery_title_and_subtitle($post_id) {
   return $output;
 }
 
-function cp_gallery_tags_for_item($post_id) {
+function cp_gallery_tags_for_item($post_id, $with_prefix = false) {
   $tags = get_the_terms( $post_id, 'gallery_tag' );
   $output = '';
-  if ( is_array($tags) ) {
+  if ( is_array($tags) && count($tags) > 0 ) {
+    if ( $with_prefix ) {
+      $output .= 'Related Tag : <br>';
+    }
     foreach($tags as $tag){
       $href = home_url() . '?gallery_search=' . $tag->name;
-      $output .= "<a class='gallery-item-tag-box' href={$href}>{$tag->name}</a>";
+      $output .= "<a class='gallery-item-tag-box' href='" . $href . "'>{$tag->name}</a>";
     }
   }
   return $output;

@@ -23,7 +23,7 @@ $image_title = cp_gallery_title_and_subtitle($post_id);
           <a tabindex="-1"
             href="<?php echo $item_media; ?>"
             class="pushed" data-title="<?php echo $image_title; ?>"
-            data-caption="<?php echo cp_gallery_tags_for_item($post_id); ?>" data-deep="index-453784" data-notmb="1"
+            data-caption="<?php echo cp_gallery_tags_for_item($post_id, true); ?>" data-deep="index-453784" data-notmb="1"
             data-lbox="ilightbox_index-453784"
             data-options="width:<?php echo $image_orig_w; ?>,height:<?php echo $image_orig_h; ?>,thumbnail: '<?php echo $item_media; ?>'"
             target="_self" title="<?php  ?>">

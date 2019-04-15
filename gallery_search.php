@@ -15,8 +15,6 @@ if ($tag) {
   $tag_id = $tag->term_id;
 }
 
-\PC::debug( ['tag_id' => $tag_id], __FUNCTION__ );
-
 $args = array(
   'post_type' => 'counter_gallery',
   'tax_query' => array(
@@ -34,6 +32,11 @@ $args = array(
   'posts_per_page' => -1 // show all
 );
 $tag_query = new WP_Query($args);
+
+$image_count_message = $post_count . ' images found';
+if ( $post_count == 0 ) {
+  $image_count_message = 'not found';
+}
 ?>
 
 <!-- 아래의 HTML는 꼭 필요합니다. 이렇게 하지 않으면, menu의 background-color가 transport 에서 white로 변경되기 때문입니다. -->
@@ -44,7 +47,7 @@ $tag_query = new WP_Query($args);
         <div class="header-content">
           <div class="header-content-inner">
             <h1 class="search-tags"> <?php echo $tag_name; ?> </h1>
-            <div class="tag-count"><?php echo $post_count; ?> images found</div>
+            <div class="tag-count"> <?php echo $image_count_message; ?> </div>
           </div>
         </div>
       </div>
