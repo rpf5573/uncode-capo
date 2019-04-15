@@ -1,6 +1,6 @@
 <?php
 $rootPath = get_stylesheet_directory();
-\PC::debug( ['rootPath' => $rootPath], __FUNCTION__ );
+require_once $rootPath . '/includes/uncode_override.php';
 require_once $rootPath . '/includes/gallery.php';
 
 add_action('after_setup_theme', 'uncode_language_setup');
@@ -15,12 +15,12 @@ function theme_enqueue_styles()
 	$resources_version = ($production_mode === 'on') ? null : rand();
 	$parent_style = 'uncode-style';
 	$child_style = array('uncode-custom-style');
+	$rand = rand(1, 1000);
 	wp_enqueue_style($parent_style, get_template_directory_uri() . '/library/css/style.css', array(), $resources_version);
 	wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', $child_style, $resources_version);
-	wp_enqueue_script( 'child-js', get_stylesheet_directory_uri(), '/main.js', '1.0.0', true );
+	wp_enqueue_script( 'cp-js', get_stylesheet_directory_uri() . '/main.js', array(), $rand, true );
 
 	if ( isset($_GET['s']) ) {
-		\PC::debug( ['search keyword' => $_GET['s']], __FUNCTION__ );
 		wp_enqueue_script( 'vc_masonry', vc_asset_url( 'lib/bower/masonry/dist/masonry.pkgd.min.js' ), array(), '1.0.0', true );
 	}
 
